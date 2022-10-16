@@ -1,0 +1,17 @@
+version: "2"
+services:
+  mysql:
+    container_name: mysql
+    restart: always
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "intcomex" # TODO: Change this
+      MYSQL_DATABASE: intcomex
+      MYSQL_USER: intcomex
+      MYSQL_PASSWORD: intcomex
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "33060:3306"
+volumes:
+  mysql:

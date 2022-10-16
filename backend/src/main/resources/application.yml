@@ -1,0 +1,42 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: intcomex
+    password: intcomex
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:33060/intcomex
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 20
+      max-lifetime: 1800000
+      idle-timeout: 30000
+  jpa:
+    hibernate:  
+      connection: 
+      provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+    properties:
+        hibernate:
+            show_sql: true  
+            format_sql: true
+            use_sql: true
+            id:
+              new_generator_mappings: false
+            default_schema: littracker
+            search:
+              autoregister_listeners: false
+            bytecode:
+              use_reflection_optimizer:false
+            logging:
+              level:
+                org:
+                  hibernate:
+                    SQL: DEBUG
+  flyway:
+    enabled: true
+    locations: classpath:db/migrations
+    baselineOnMigrate: true
+    outOfOrder: true
+
+logging.level.com.zaxxer.hikari.HikariConfig: DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE
