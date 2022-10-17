@@ -1,5 +1,7 @@
 package com.incomex.api.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<Object> createProduct(@RequestBody ProductIn product) throws InvalidInputException {
+	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductIn product) throws InvalidInputException {
 		return ResponseApi.generateResponse(productService.createProduct(product));
 	}
 }

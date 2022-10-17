@@ -1,15 +1,18 @@
 package com.incomex.api.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import java.io.Serializable;
 
-@Component
-public class Configurations {
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-	@Bean
-	public PasswordEncoder encoder() {
-	    return new BCryptPasswordEncoder();
-	}
+import lombok.Data;
+
+@Configuration("tokenProperties")
+@ConfigurationProperties(prefix = "key.security.token")
+@Data
+public class Configurations implements Serializable{
+
+	private static final long serialVersionUID = -8973497443711364401L;
+	private String secretKey;
+	private int expiration;
 }

@@ -38,5 +38,14 @@ spring:
     baselineOnMigrate: true
     outOfOrder: true
 
-logging.level.com.zaxxer.hikari.HikariConfig: DEBUG
+logginglevel.com.zaxxer.hikari.HikariConfig: DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+security.token.secret.key: Asjfwol2asf123142Ags1k23hnSA36as6f4qQ324FEsvb
+security.token.secret.expiration: 180000
+
+key:
+   security:
+      token:
+         secretKey: Asjfwol2asf123142Ags1k23hnSA36as6f4qQ324FEsvb
+         expiration: 180000
+

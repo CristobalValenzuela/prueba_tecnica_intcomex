@@ -11,12 +11,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.incomex.api.codes.ApiBaseCodes;
 import com.incomex.api.data.out.ResponseApi;
 import com.incomex.api.exceptions.BusinessException;
 import com.incomex.api.exceptions.InvalidInputException;
+import com.incomex.api.exceptions.UnauthorizedException;
 
 @ControllerAdvice
 public class ExceptionHelper {
@@ -28,10 +28,10 @@ public class ExceptionHelper {
 		return ResponseApi.generateResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, ex.getCode());
 	}
 
-	@ExceptionHandler(value = { Unauthorized.class })
-	public ResponseEntity<Object> handleUnauthorizedException(Unauthorized ex) {
+	@ExceptionHandler(value = { UnauthorizedException.class })
+	public ResponseEntity<Object> handleUnauthorizedException(UnauthorizedException ex) {
 		logger.error("Unauthorized Exception: ", ex.getLocalizedMessage());
-		return ResponseApi.generateResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, ApiBaseCodes.getGenericCode());
+		return ResponseApi.generateResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, ex.getCode());
 	}
 
 	@ExceptionHandler(value = { BusinessException.class })
@@ -43,7 +43,8 @@ public class ExceptionHelper {
 	@ExceptionHandler(value = { Exception.class })
 	public ResponseEntity<Object> handleException(Exception ex) {
 		logger.error("Exception: ", ex);
-		return ResponseApi.generateResponse(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR, ApiBaseCodes.getGenericCode());
+		return ResponseApi.generateResponse(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR,
+				ApiBaseCodes.getGenericCode());
 	}
 
 	@ExceptionHandler(value = { MethodArgumentNotValidException.class })
@@ -55,6 +56,7 @@ public class ExceptionHelper {
 			String errorMessage = error.getDefaultMessage();
 			errors.put(fieldName, errorMessage);
 		});
-		return ResponseApi.generateResponse("Missing data", HttpStatus.BAD_REQUEST,errors, ApiBaseCodes.getMissingDataCode());
+		return ResponseApi.generateResponse("Missing data", HttpStatus.BAD_REQUEST, errors,
+				ApiBaseCodes.getMissingDataCode());
 	}
 }
